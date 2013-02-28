@@ -178,7 +178,7 @@ class RiakCollector(diamond.collector.Collector):
         if len(instance_list) == 0:
             host = self.config['host']
             port = self.config['port']
-            instance_list.append('%s:%d' % (host, port))
+            instance_list.append('%s:%s' % (host, port))
 
         self.instances = {}
         for instance in instance_list:
@@ -227,7 +227,7 @@ class RiakCollector(diamond.collector.Collector):
         config.update({
             'host': self._DEFAULT_HOST,
             'port': self._DEFAULT_PORT,
-            'path': 'stats',
+            'path': 'riak',
             'instances': [],
         })
         return config
@@ -241,10 +241,10 @@ class RiakCollector(diamond.collector.Collector):
 
         """
         try:
-            cli = urllib2.openurl("http://%s:%d/stats" % (host, port))
+            cli = urllib2.urlopen("http://%s:%s/stats" % (host, port))
             return cli
         except Exception, ex:
-            self.log.error("RiakCollector: failed to connect to %s:%i. %s.",
+            self.log.error("RiakCollector: failed to connect to %s:%s. %s.",
                            host, port, ex)
 
     def _precision(self, value):
