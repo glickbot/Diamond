@@ -67,60 +67,23 @@ class RiakCollector(diamond.collector.Collector):
             'memory.mem.total': 'mem_total', # Total available system memory
             'memory.mem.allocated': 'mem_allocated', # Total memory allocated for this node
             # Node, Cluster & System
-            'system.memorynodename': 'memorynodename', # The name of the node that produced the stats output
-            'system.connected_nodes': 'connected_nodes', # List of nodes connected to this node
             'system.read.repairs': 'read_repairs', # Number of read repair operations this this node has coordinated in the last minute
             'system.read.repairs.total': 'read_repairs_total', # Number of read repair operations this this node has coordinated since node was started
             'system.coord.redirs.total': 'coord_redirs_total', # Number of requests this node has redirected to other nodes for coordination since node was started
-            'system.ring.members': 'ring_members', # List of nodes which are members of the ring
             'system.ring.partitions': 'ring_num_partitions', # Number of partitions in the ring
-            'system.ring.ownership': 'ring_ownership', # List of all nodes in the ring and their associated partition ownership
             'system.ring.creation.size': 'ring_creation_size', # Number of partitions this node is configured to own
             'system.ignored.gossip.total': 'ignored_gossip_total', # Total number of ignored gossip messages since node was started
             'system.handoff.timeouts': 'handoff_timeouts', # Number of handoff timeouts encountered by this node
             'system.precommit.fail': 'precommit_fail', # Number of pre commit hook failures
             'system.postcommit.fail': 'postcommit_fail', # Number of post commit hook failures
-            'system.sys.driver.version': 'sys_driver_version', # String representing the Erlang driver version in use by the runtime system
             'system.sys.global.heaps.size': 'sys_global_heaps_size', # Current size of the shared global heap
-            'system.sys.heap.type': 'sys_heap_type', # String representing the heap type in use (one of private, shared, hybrid)
             'system.sys.logical.processors': 'sys_logical_processors', # Number of logical processors available on the system
-            'system.sys.otp.release': 'sys_otp_release', # Erlang OTP release version in use on the node
             'system.sys.process.count': 'sys_process_count', # Number of processes existing on this node
-            'system.sys.smp.support': 'sys_smp_support', # Boolean value representing whether symmetric multi-processing (SMP) is available
-            'system.sys.system.version': 'sys_system_version', # Detailed Erlang version information
-            'system.sys.system.architecture': 'sys_system_architecture', # The node operating system and hardware architecture
-            'system.sys.threads.enabled': 'sys_threads_enabled', # Boolean value representing whether threads are enabled
             'system.sys.thread.pool.size': 'sys_thread_pool_size', # Number of threads in the asynchronous thread pool
             'system.sys.wordsize': 'sys_wordsize', # Size of Erlang term words in bytes as an integer, for examples, on 32-bit architectures 4 is returned and on 64-bit architectures 8 is returned
-            'system.storage.backend': 'storage_backend', # Name of the active storage backend
             'system.pbc.connects.total': 'pbc_connects_total', # Number of protocol buffers connections since node was started
             'system.pbc.connects': 'pbc_connects', # Number of protocol buffers connections in the last minute
             'system.pbc.active': 'pbc_active', # Number of active protocol buffers connections
-            'system.ssl.vnode.version': 'ssl_vnode.version', # Version of secure sockets layer (SSL) application in use
-            'system.public.key.version': 'public_key_version', # Version of public key application in use
-            'system.runtime.tools.version': 'runtime_tools_version', # Version of runtime tools application in use
-            'system.basho.stats.version': 'basho_stats_version', # Version of Basho stats application in use
-            'system.search.version': 'riak_search_version', # Version of Riak Search application in use
-            'system.kv.vnode.ersion': 'riak_kv_version', # Version of Riak KV application in use
-            'system.bitcast.version': 'bitcask_version', # Version of Bitcask backend application in use
-            'system.luke.version': 'luke_version', # Version of Luke application in use
-            'system.erlang.js.version': 'erlang_js_version', # Version of Erlang JS application in use
-            'system.mochiweb.version': 'mochiweb_version', # Version of MochiWeb application in use
-            'system.inets.version': 'inets_version', # Version of Inets application in use
-            'system.riak.pipe.version': 'riak_pipe_version', # Version of Riak Pipe application in use
-            'system.merge.index.version': 'merge_index_version', # Version of Merge Index application in use
-            'system.cluster.info.version': 'cluster_info_version', # Version of Cluster Information application in use
-            'system.basho.metrics.version': 'basho_metrics_version', # Version of Basho Metrics application in use
-            'system.riak.control.version': 'riak_control_version', # Version of Riak Control application in use
-            'system.riak.core.version': 'riak_core_version', # Version of Riak Core application in use
-            'system.lager.version': 'lager_version', # Version of Lager application in use
-            'system.riak.sysmon.version': 'riak_sysmon_version', # Version of Riak System Monitor application in use
-            'system.webmachine.version': 'webmachine_version', # Version of Webmachine application in use
-            'system.crypto.version': 'crypto_version', # Version of Cryptography application in use
-            'system.os.mon.version': 'os_mon_version', # Version of Operating System Monitor application in use
-            'system.sasl.version': 'sasl_version', # Version of SASL application in use
-            'system.stdlib.version': 'stdlib_version', # Version of Standard Library application in use
-            'system.kernel.version': 'kernel_version', # Version of Kernel application in use
             # Node & VNode Counters
             'vnode.gets': 'vnode_gets', # Number of GET operations coordinated by vnodes on this node within the last minute
             'vnode.puts': 'vnode_puts', # Number of PUT operations coordinated by vnodes on this node within the last minute
