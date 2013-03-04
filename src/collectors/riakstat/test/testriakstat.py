@@ -348,15 +348,15 @@ class TestRiakCollector(CollectorTestCase):
         patch_collector.stop()
         patch_time.stop()
 
-        metrics = {"8091.vnode.gets": 0,
+        metrics = {"8091.vnode.gets.last_minute": 0,
                   "8091.vnode.gets.total": 1045337,
-                  "8091.vnode.puts": 0,
+                  "8091.vnode.puts.last_minute": 0,
                   "8091.vnode.puts.total": 181231554,
-                  "8091.vnode.index.reads": 0,
+                  "8091.vnode.index.reads.last_minute": 0,
                   "8091.vnode.index.reads.total": 368880,
-                  "8091.vnode.index.writes": 0,
+                  "8091.vnode.index.writes.last_minute": 0,
                   "8091.vnode.index.writes.total": 18855546,
-                  "8091.vnode.index.deletes": 0,
+                  "8091.vnode.index.deletes.last_minute": 0,
                   "8091.vnode.index.deletes.total": 0
                   }
 
