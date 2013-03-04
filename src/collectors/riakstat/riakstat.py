@@ -56,10 +56,10 @@ class RiakCollector(diamond.collector.Collector):
             'cpu.avg15': 'cpu_avg15', # The average number of active processes for the last 15 minutes (equivalent to top(1) command's load average when divided by 256()
             # Memory statistics are taken directly from the Erlang virtual machine. Documentation for which can be found at ErlDocs: Memory.
             'memory.total': 'memory_total', # Total allocated memory (sum of processes and system)
-            'memory.processes': 'memory_processes', # Total amount of memory allocated for Erlang processes
+            'memory.processes.allocated': 'memory_processes', # Total amount of memory allocated for Erlang processes
             'memory.processes.used': 'memory_processes_used', # Total amount of memory used by Erlang processes
             'memory.system': 'memory_system', # Total allocated memory that is not directly related to an Erlang process
-            'memory.atom': 'memory_atom', # Total amount of memory currently allocated for atom storage
+            'memory.atom.allocated': 'memory_atom', # Total amount of memory currently allocated for atom storage
             'memory.atom.used': 'memory_atom_used', # Total amount of memory currently used for atom storage
             'memory.binary': 'memory_binary', # Total amount of memory used for binaries
             'memory.code': 'memory_code', # Total amount of memory allocated for Erlang code
@@ -67,60 +67,60 @@ class RiakCollector(diamond.collector.Collector):
             'memory.mem.total': 'mem_total', # Total available system memory
             'memory.mem.allocated': 'mem_allocated', # Total memory allocated for this node
             # Node, Cluster & System
-            'system.read.repairs': 'read_repairs', # Number of read repair operations this this node has coordinated in the last minute
-            'system.read.repairs.total': 'read_repairs_total', # Number of read repair operations this this node has coordinated since node was started
-            'system.coord.redirs.total': 'coord_redirs_total', # Number of requests this node has redirected to other nodes for coordination since node was started
+            'system.read_repairs.last_minute': 'read_repairs', # Number of read repair operations this this node has coordinated in the last minute
+            'system.read_repairs.total': 'read_repairs_total', # Number of read repair operations this this node has coordinated since node was started
+            'system.coord_redirs_total': 'coord_redirs_total', # Number of requests this node has redirected to other nodes for coordination since node was started
             'system.ring.partitions': 'ring_num_partitions', # Number of partitions in the ring
-            'system.ring.creation.size': 'ring_creation_size', # Number of partitions this node is configured to own
-            'system.ignored.gossip.total': 'ignored_gossip_total', # Total number of ignored gossip messages since node was started
-            'system.handoff.timeouts': 'handoff_timeouts', # Number of handoff timeouts encountered by this node
-            'system.precommit.fail': 'precommit_fail', # Number of pre commit hook failures
-            'system.postcommit.fail': 'postcommit_fail', # Number of post commit hook failures
-            'system.sys.global.heaps.size': 'sys_global_heaps_size', # Current size of the shared global heap
-            'system.sys.logical.processors': 'sys_logical_processors', # Number of logical processors available on the system
-            'system.sys.process.count': 'sys_process_count', # Number of processes existing on this node
-            'system.sys.thread.pool.size': 'sys_thread_pool_size', # Number of threads in the asynchronous thread pool
+            'system.ring.creation_size': 'ring_creation_size', # Number of partitions this node is configured to own
+            'system.ignored_gossip_total': 'ignored_gossip_total', # Total number of ignored gossip messages since node was started
+            'system.handoff_timeouts': 'handoff_timeouts', # Number of handoff timeouts encountered by this node
+            'system.precommit_fail': 'precommit_fail', # Number of pre commit hook failures
+            'system.postcommit_fail': 'postcommit_fail', # Number of post commit hook failures
+            'system.sys.global_heaps_size': 'sys_global_heaps_size', # Current size of the shared global heap
+            'system.sys.logical_processors': 'sys_logical_processors', # Number of logical processors available on the system
+            'system.sys.process_count': 'sys_process_count', # Number of processes existing on this node
+            'system.sys.thread_pool_size': 'sys_thread_pool_size', # Number of threads in the asynchronous thread pool
             'system.sys.wordsize': 'sys_wordsize', # Size of Erlang term words in bytes as an integer, for examples, on 32-bit architectures 4 is returned and on 64-bit architectures 8 is returned
             'system.pbc.connects.total': 'pbc_connects_total', # Number of protocol buffers connections since node was started
-            'system.pbc.connects': 'pbc_connects', # Number of protocol buffers connections in the last minute
+            'system.pbc.connects.last_minute': 'pbc_connects', # Number of protocol buffers connections in the last minute
             'system.pbc.active': 'pbc_active', # Number of active protocol buffers connections
             # Node & VNode Counters
-            'vnode.gets': 'vnode_gets', # Number of GET operations coordinated by vnodes on this node within the last minute
-            'vnode.puts': 'vnode_puts', # Number of PUT operations coordinated by vnodes on this node within the last minute
+            'vnode.gets.last_minute': 'vnode_gets', # Number of GET operations coordinated by vnodes on this node within the last minute
+            'vnode.puts.last_minute': 'vnode_puts', # Number of PUT operations coordinated by vnodes on this node within the last minute
             'vnode.gets.total': 'vnode_gets_total', # Number of GET operations coordinated by vnodes on this node since node was started
             'vnode.puts.total': 'vnode_puts_total', # Number of PUT operations coordinated by vnodes on this node since node was started
-            'node.gets': 'node_gets', # Combined number of local and non-local GET operations coordinated by this node in the last minute
-            'node.gets.total': 'node_gets_total', # Combined number of local and non-local GET operations coordinated by this node since node was started
             # Microsecond Timers
-            'node.get.fsm.time.mean': 'node_get_fsm_time_mean', # Mean time between reception of client GET request and subsequent response to client
-            'node.get.fsm.time.median': 'node_get_fsm_time_median', # Median time between reception of client GET request and subsequent response to client
-            'node.get.fsm.time.95': 'node_get_fsm_time_95', # 95th percentile time between reception of client GET request and subsequent response to client
-            'node.get.fsm.time.99': 'node_get_fsm_time_99', # 99th percentile time between reception of client GET request and subsequent response to client
-            'node.get.fsm.time.100': 'node_get_fsm_time_100', # 100th percentile time between reception of client GET request and subsequent response to client
-            'node.puts': 'node_puts', # Combined number of local and non-local PUT operations coordinated by this node in the last minute
+            'node.gets.last_minute': 'node_gets', # Combined number of local and non-local GET operations coordinated by this node in the last minute
+            'node.gets.total': 'node_gets_total', # Combined number of local and non-local GET operations coordinated by this node since node was started
+            'node.get_fsm_time.mean': 'node_get_fsm_time_mean', # Mean time between reception of client GET request and subsequent response to client
+            'node.get_fsm_time.median': 'node_get_fsm_time_median', # Median time between reception of client GET request and subsequent response to client
+            'node.get_fsm_time.95': 'node_get_fsm_time_95', # 95th percentile time between reception of client GET request and subsequent response to client
+            'node.get_fsm_time.99': 'node_get_fsm_time_99', # 99th percentile time between reception of client GET request and subsequent response to client
+            'node.get_fsm_time.100': 'node_get_fsm_time_100', # 100th percentile time between reception of client GET request and subsequent response to client
+            'node.puts.last_minute': 'node_puts', # Combined number of local and non-local PUT operations coordinated by this node in the last minute
             'node.puts.total': 'node_puts_total', # Combined number of local and non-local PUT operations coordinated by this node since node was started
-            'node.put.fsm.time.mean': 'node_put_fsm_time_mean', # Mean time between reception of client PUT request and subsequent response to client
-            'node.put.fsm.time.median': 'node_put_fsm_time_median', # Median time between reception of client PUT request and subsequent response to client
-            'node.put.fsm.time.95': 'node_put_fsm_time_95', # 95th percentile time between reception of client PUT request and subsequent response to client
-            'node.put.fsm.time.99': 'node_put_fsm_time_99', # 99th percentile time between reception of client PUT request and subsequent response to client
-            'node.put.fsm.time.100': 'node_put_fsm_time_100', # 100th percentile time between reception of client PUT request and subsequent response to client
+            'node.put_fsm_time.mean': 'node_put_fsm_time_mean', # Mean time between reception of client PUT request and subsequent response to client
+            'node.put_fsm_time.median': 'node_put_fsm_time_median', # Median time between reception of client PUT request and subsequent response to client
+            'node.put_fsm_time.95': 'node_put_fsm_time_95', # 95th percentile time between reception of client PUT request and subsequent response to client
+            'node.put_fsm_time.99': 'node_put_fsm_time_99', # 99th percentile time between reception of client PUT request and subsequent response to client
+            'node.put_fsm_time.100': 'node_put_fsm_time_100', # 100th percentile time between reception of client PUT request and subsequent response to client
             # Object, Index & Sibling Metrics
-            'node.get.fsm.objsize.mean': 'node_get_fsm_objsize_mean', # Mean object size encountered by this node within the last minute
-            'node.get.fsm.objsize.median': 'node_get_fsm_objsize_median', # Median object size encountered by this node within the last minute
-            'node.get.fsm.objsize.95': 'node_get_fsm_objsize_95', # 95th percentile object size encountered by this node within the last minute
-            'node.get.fsm.objsize.99': 'node_get_fsm_objsize_99', # 99th percentile object size encountered by this node within the last minute
-            'node.get.fsm.objsize.100': 'node_get_fsm_objsize_100', # 100th percentile object size encountered by this node within the last minute
-            'vnode.index.reads': 'vnode_index_reads', # Number of vnode index read operations performed in the last minute
-            'vnode.index.writes': 'vnode_index_writes', # Number of vnode index write operations performed in the last minute
-            'vnode.index.deletes': 'vnode_index_deletes', # Number of vnode index delete operations performed in the last minute
+            'node.get_fsm_objsize.mean': 'node_get_fsm_objsize_mean', # Mean object size encountered by this node within the last minute
+            'node.get_fsm_objsize.median': 'node_get_fsm_objsize_median', # Median object size encountered by this node within the last minute
+            'node.get_fsm_objsize.95': 'node_get_fsm_objsize_95', # 95th percentile object size encountered by this node within the last minute
+            'node.get_fsm_objsize.99': 'node_get_fsm_objsize_99', # 99th percentile object size encountered by this node within the last minute
+            'node.get_fsm_objsize.100': 'node_get_fsm_objsize_100', # 100th percentile object size encountered by this node within the last minute
+            'vnode.index.reads.last_minute': 'vnode_index_reads', # Number of vnode index read operations performed in the last minute
+            'vnode.index.writes.last_minute': 'vnode_index_writes', # Number of vnode index write operations performed in the last minute
+            'vnode.index.deletes.last_minute': 'vnode_index_deletes', # Number of vnode index delete operations performed in the last minute
             'vnode.index.reads.total': 'vnode_index_reads_total', # Number of vnode index read operations performed since the node was started
             'vnode.index.writes.total': 'vnode_index_writes_total', # Number of vnode index write operations performed since the node was started
             'vnode.index.deletes.total': 'vnode_index_deletes_total', # Number of vnode index delete operations performed since the node was started
-            'node.get.fsm.siblings.mean': 'node_get_fsm_siblings_mean', # Mean number of siblings encountered during all GET operations by this node within the last minute
-            'node.get.fsm.siblings.median': 'node_get_fsm_siblings_median', # Median number of siblings encountered during all GET operations by this node within the last minute
-            'node.get.fsm.siblings.95': 'node_get_fsm_siblings_95', # 95th percentile of siblings encountered during all GET operations by this node within the last minute
-            'node.get.fsm.siblings.99': 'node_get_fsm_siblings_99', # 99th percentile of siblings encountered during all GET operations by this node within the last minute
-            'node.get.fsm.siblings.100': 'node_get_fsm_siblings_100', # 100th percentile of siblings encountered during all GET operations by this node within the last minute
+            'node.get_fsm_siblings.mean': 'node_get_fsm_siblings_mean', # Mean number of siblings encountered during all GET operations by this node within the last minute
+            'node.get_fsm_siblings.median': 'node_get_fsm_siblings_median', # Median number of siblings encountered during all GET operations by this node within the last minute
+            'node.get_fsm_siblings.95': 'node_get_fsm_siblings_95', # 95th percentile of siblings encountered during all GET operations by this node within the last minute
+            'node.get_fsm_siblings.99': 'node_get_fsm_siblings_99', # 99th percentile of siblings encountered during all GET operations by this node within the last minute
+            'node.get_fsm_siblings.100': 'node_get_fsm_siblings_100', # 100th percentile of siblings encountered during all GET operations by this node within the last minute
             # Pipeline Metrics
             'pipeline.active': 'pipeline_active', # The number of pipelines active in the last 60 seconds
             'pipeline.create.count': 'pipeline_create_count', # The total number of pipelines created since the node was started
