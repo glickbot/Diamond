@@ -47,6 +47,12 @@ class RiakCollector(diamond.collector.Collector):
     _DEFAULT_HOST = 'localhost'
     _DEFAULT_PORT = 8091
 
+    _LIST_KEYS = {
+            # These keys are lists in Riak, so we return a count of items in the list to graphite
+            'system.ring.members_count': 'ring_members',
+            'system.connected_nodes_count': 'connected_nodes'
+    }
+
     _KEYS = {
             # CPU and Memory
             # CPU statistics are taken directly from Erlang's cpu_sup module. Documentation for which can be found at ErlDocs: cpu_sup.
@@ -274,6 +280,10 @@ class RiakCollector(diamond.collector.Collector):
         for key in self._KEYS:
             if self._KEYS[key] in info:
                 data[key] = info[self._KEYS[key]]
+
+        for key in self._LIST_KEYS:
+            if self._LIST_KEYS[key] in info:
+                data[key] = len(info[self._LIST_KEYS[key]])
 
         # Publish the data to graphite
         for key in data:

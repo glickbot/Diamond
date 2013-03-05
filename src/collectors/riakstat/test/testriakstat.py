@@ -86,7 +86,7 @@ class TestRiakCollector(CollectorTestCase):
                   "connected_nodes": [
                       "riak@10.0.0.11",
                       "riak@10.0.0.12",
-                      "riak@10.0.0.13"
+                      "riak@10.0.0.13",
                       "riak@10.0.0.14",
                   ],
                   "sys_driver_version": "2.0",
@@ -105,7 +105,7 @@ class TestRiakCollector(CollectorTestCase):
                       "riak@10.0.0.10",
                       "riak@10.0.0.11",
                       "riak@10.0.0.12",
-                      "riak@10.0.0.13"
+                      "riak@10.0.0.13",
                       "riak@10.0.0.14",
                   ],
                   "ring_num_partitions": 64,
@@ -234,7 +234,7 @@ class TestRiakCollector(CollectorTestCase):
                   "connected_nodes": [
                       "riak@10.0.1.11",
                       "riak@10.0.1.12",
-                      "riak@10.0.1.13"
+                      "riak@10.0.1.13",
                       "riak@10.0.1.14",
                   ],
                   "sys_driver_version": "2.0",
@@ -253,7 +253,7 @@ class TestRiakCollector(CollectorTestCase):
                       "riak@10.0.1.10",
                       "riak@10.0.1.11",
                       "riak@10.0.1.12",
-                      "riak@10.0.1.13"
+                      "riak@10.0.1.13",
                       "riak@10.0.1.14",
                   ],
                   "ring_num_partitions": 64,
@@ -357,7 +357,9 @@ class TestRiakCollector(CollectorTestCase):
                   "8091.vnode.index.writes.last_minute": 0,
                   "8091.vnode.index.writes.total": 18855546,
                   "8091.vnode.index.deletes.last_minute": 0,
-                  "8091.vnode.index.deletes.total": 0
+                  "8091.vnode.index.deletes.total": 0,
+                  "8091.system.connected_nodes_count": 4,
+                  "8091.system.ring.members_count": 5,
                   }
 
 
