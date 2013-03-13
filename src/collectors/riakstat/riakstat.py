@@ -216,19 +216,6 @@ class RiakCollector(diamond.collector.Collector):
             self.log.error("RiakCollector: failed to connect to %s:%s. %s.",
                            host, port, ex)
 
-    def _precision(self, value):
-        """Return the precision of the number
-
-:param str value: The value to find the precision of
-:rtype: int
-
-        """
-        value = str(value)
-        decimal = value.rfind('.')
-        if decimal == -1:
-            return 0
-        return len(value) - decimal - 1
-
     def _publish_key(self, nick, key):
         """Return the full key for the partial key.
 
@@ -287,10 +274,7 @@ class RiakCollector(diamond.collector.Collector):
 
         # Publish the data to graphite
         for key in data:
-            self.publish(self._publish_key(nick, key),
-                         data[key],
-                         self._precision(data[key]),
-                         'GAUGE')
+            self.publish(self._publish_key(nick, key), data[key])
 
     def collect(self):
         """Collect the stats from the riak instance and publish them.
