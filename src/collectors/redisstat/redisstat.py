@@ -92,7 +92,7 @@ class RedisCollector(diamond.collector.Collector):
         if len(instance_list) == 0:
             host = self.config['host']
             port = self.config['port']
-            instance_list.append('%s:%d' % (host, port))
+            instance_list.append('%s:%s' % (host, port))
 
         self.instances = {}
         for instance in instance_list:
