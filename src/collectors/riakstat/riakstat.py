@@ -142,8 +142,8 @@ class RiakCollector(diamond.collector.Collector):
         super(RiakCollector, self).__init__(*args, **kwargs)
 
         self.logfile_list = self.config['logfiles']
-        if isinstance(logfile_list, basestring):
-            self.logfile_list = [logfile_list]
+        if isinstance(self.logfile_list, basestring):
+            self.logfile_list = [self.logfile_list]
 
         instance_list = self.config['instances']
         # configobj make str of single-element list, let's convert
