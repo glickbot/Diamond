@@ -20,6 +20,7 @@ Example config file RiakCollector.conf
 enabled=True
 host=riak.example.com
 port=8098
+logfiles=/var/log/riak/console.log,/var/log/riak/error.log
 ```
 
 or for multi-instance mode:
@@ -40,7 +41,9 @@ import diamond.collector
 import time
 import urllib2
 import json
-
+import re
+from datetime import datetime, timedelta
+from os.path import basename, splitext
 
 class RiakCollector(diamond.collector.Collector):
 
@@ -138,6 +141,10 @@ class RiakCollector(diamond.collector.Collector):
     def __init__(self, *args, **kwargs):
         super(RiakCollector, self).__init__(*args, **kwargs)
 
+        self.logfile_list = self.config['logfiles']
+        if isinstance(logfile_list, basestring):
+            self.logfile_list = [logfile_list]
+
         instance_list = self.config['instances']
         # configobj make str of single-element list, let's convert
         if isinstance(instance_list, basestring):
@@ -181,7 +188,8 @@ class RiakCollector(diamond.collector.Collector):
             'host': 'Hostname to collect from',
             'port': 'Port number to collect from',
             'instances': "Riak addresses, comma separated, syntax:"
-            + " nick1@host:port, nick2@:port or nick3@host"
+            + " nick1@host:port, nick2@:port or nick3@host",
+            'logfiles': 'Log files to scan for errors'
         })
         return config_help
 
@@ -198,6 +206,7 @@ class RiakCollector(diamond.collector.Collector):
             'port': self._DEFAULT_PORT,
             'path': 'riak',
             'instances': [],
+            'logfiles': [],
         })
         return config
 
@@ -245,6 +254,37 @@ class RiakCollector(diamond.collector.Collector):
 
         return info
 
+    def collect_log_errors(self, logfile):
+        log = splitext(basename(logfile))[0]
+
+        logRe = re.compile('^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3}) \[error\]')
+
+        now = datetime.now()
+        oneMinAgo = str(now - timedelta(seconds=60))[0:23]
+        fiveMinsAgo = str(now - timedelta(seconds=300))[0:23]
+        fifteenMinsAgo = str(now - timedelta(seconds=900))[0:23]
+
+        errors15 = 0
+        errors5 = 0
+        errors1 = 0
+        total = 0
+
+        with open(logfile) as f:
+          for line in f:
+            m = logRe.match(line)
+            if m:
+              total += 1
+              if m.group(0) > fifteenMinsAgo:
+                errors15 += 1
+                if m.group(0) > fiveMinsAgo:
+                  errors5 += 1
+                  if m.group(0) > oneMinAgo:
+                    errors1 += 1
+
+        self.publish("logs.{0}.errors1".format(log), errors1)
+        self.publish("logs.{0}.errors5".format(log), errors5)
+        self.publish("logs.{0}.errors15".format(log), errors15)
+
     def collect_instance(self, nick, host, port):
         """Collect metrics from a single Riak instance
 
@@ -283,3 +323,5 @@ class RiakCollector(diamond.collector.Collector):
         for nick in self.instances.keys():
             (host, port) = self.instances[nick]
             self.collect_instance(nick, host, int(port))
+        for logfile in self.logfile_list:
+            self.collect_log_errors(logfile)
