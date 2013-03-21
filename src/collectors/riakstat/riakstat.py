@@ -136,6 +136,13 @@ class RiakCollector(diamond.collector.Collector):
             'pipeline.create.error.count': 'pipeline_create_error_count', # The total number of pipeline creation errors since the node was started
             'pipeline.create.error.one': 'pipeline_create_error_one', # The number of pipelines created in the last 60 seconds
             'pipeline.create.one': 'pipeline_create_one', # The number of pipeline creation errors in the last 60 seconds
+            # Search Metrics
+            'riak_search_vnodes_running' : 'search_riak_search_vnodes_running', #Total number of vnodes currently running in the Riak Search subsystem
+            'riak_search_vnodeq_min' : 'search_riak_search_vnodeq_min', #Minimum number of unprocessed messages all vnode message queues in the Riak Search subsystem have received on this node in the last minute
+            'riak_search_vnodeq_median' : 'search_riak_search_vnodeq_median', #Median number of unprocessed messages all vnode message queues in the Riak Search subsystem have received on this node in the last minute
+            'riak_search_vnodeq_mean' : 'search_riak_search_vnodeq_mean', #Mean number of unprocessed messages all vnode message queues in the Riak Search subsystem have received on this node in the last minute
+            'riak_search_vnodeq_max' : 'search_riak_search_vnodeq_max', #Maximum number of unprocessed messages all virtual node (vnode) message queues in the Riak Search subsystem have received on this node in the last minute
+            'riak_search_vnodeq_total' : 'search_riak_search_vnodeq_total' #Total number of unprocessed messages all vnode message queues in the Riak Search subsystem have received on this node since it was started
             }
 
     def __init__(self, *args, **kwargs):
